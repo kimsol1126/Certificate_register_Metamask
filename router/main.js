@@ -4,4 +4,12 @@ module.exports = function(app)
         res.render('index.html');
     });
 
+    app.get('/submit',function(req,res){
+        res.render('submit.html');
+    });
+
+    app.get('/verify',function(req,res){
+        res.render('verify.html');
+    });
+
 }
