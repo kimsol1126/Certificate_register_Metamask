@@ -2,12 +2,12 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract certificate {
     struct userinfo{
-        address addr; //20
-        string name; //bytes(u.name).length
-        string birth; //bytes(u.birth).length
-        uint notBefore; //32
-        uint notAfter; //32
-        bytes32 id; //32
+        address addr; 
+        string name; 
+        string birth; 
+        uint notBefore; 
+        uint notAfter; 
+        bytes32 id;
     }
     struct cert {
         bytes32 certhash;
@@ -54,7 +54,6 @@ contract certificate {
         addressToInfo[msg.sender].id = setId();
         
         certhash = keccak256(userinfoToBytes(addressToInfo[msg.sender]));
-        //certhash = keccak256(abi.encodePacked(addressToInfo[addr].name));
     }
     
     function userinfoToBytes(userinfo memory u) private returns (bytes memory data){

@@ -436,7 +436,7 @@ $(document).ready(function() {
       });
     	
     }
-    //DB에 인증서 저장하는 코드인데 수정 필요함
+    //DB에 인증서 저장하는 코드 수정중
     // async function Save(){
     //   if (window.ethereum)
 		// 	try {
