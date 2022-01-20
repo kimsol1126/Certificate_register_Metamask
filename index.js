@@ -17,7 +17,7 @@ let server = app.listen(port, function(){
     console.log("Express server has started on port "+ port)
 });
 
-// conn.connect(function(err){
-//     if (err) throw err;
-//     console.log('Connected');
-// })
+conn.connect(function(err){
+    if (err) throw err;
+    console.log('Connected');
+})
