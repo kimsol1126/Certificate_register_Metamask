@@ -176,6 +176,18 @@ section#viewVerifyDocument > p{
 }
 
 #itemUploadButton{
+  /* margin-right:-6px; */
+  width:100px;
+  border:2px solid  #9caec7;
+  background-color:white;
+  padding:5px;
+  border-top-left-radius:10px;
+  border-bottom-left-radius:10px;
+  border-top-right-radius:10px;
+  border-bottom-right-radius:10px;
+}
+
+#showTableButton{
   margin-right:-6px;
   width:100px;
   border:2px solid  #9caec7;
@@ -183,14 +195,6 @@ section#viewVerifyDocument > p{
   padding:5px;
   border-top-left-radius:10px;
   border-bottom-left-radius:10px;
-}
-
-#showTableButton{
-  margin-right:-2px;
-  width:100px;
-  border:2px solid  #9caec7;
-  background-color:white;
-  padding:5px;
 }
 
 #deletecertButton{
@@ -229,9 +233,6 @@ section#viewVerifyDocument > p{
 }
 
 #documentVerifyButton{
-  margin:20px;
-  padding:10px;
-  height:40px;
   width:100px;
   border:2px solid  #9caec7;
   background-color:white;
