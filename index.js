@@ -21,3 +21,29 @@ conn.connect(function(err){
     if (err) throw err;
     console.log('Connected');
 })
+
+// 넣고 싶은 정보
+const info = {
+    "name": '김솔',
+    "birth": '1999-11-26',
+    "pubkey": ''
+}
+
+// 연결되었는지 확인
+/*conn.connect(function(err){
+    if (err) throw err;
+    console.log("You are connected");
+});*/
+
+var sql = 'INSERT INTO user_info (user_name, user_birth, user_pubkey) VALUES (?,?,?)';
+var params = [info['name'], info['birth'], info['pubkey']]
+conn.query(sql, params, function(err, rows, fields){
+    if(err){
+        console.log(err);
+    } else{
+        console.log(rows.name);
+    }
+});
+
+// 연결 종료
+conn.end();
