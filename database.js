@@ -11,14 +11,6 @@ var db_info = {
 }
 
 /*
-// 넣고 싶은 정보
-const info = {
-    "uid": '',
-    "iid": '',
-    "name": '양루연',
-    "birth": '2000-07-07',
-    "pubkey": ''
-}
 
 // 연결되었는지 확인
 confirm.connect(function(err){
