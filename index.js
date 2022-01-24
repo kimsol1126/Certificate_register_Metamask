@@ -22,13 +22,6 @@ conn.connect(function(err){
     console.log('Connected');
 })
 
-// 넣고 싶은 정보
-const info = {
-    "name": '김솔',
-    "birth": '1999-11-26',
-    "pubkey": ''
-}
-
 // 연결되었는지 확인
 /*conn.connect(function(err){
     if (err) throw err;
