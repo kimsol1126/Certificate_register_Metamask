@@ -33,7 +33,7 @@ contract certificate {
     deleteInfo[] public del;
     
     
-    function hasinfo() public returns(bool){
+    function hasinfo() public view returns(bool){
         if(addressToInfo[msg.sender].id == 0 ){
             return false;
         }
@@ -98,7 +98,7 @@ contract certificate {
     }
     
     function newCert() private {
-        certificates[msg.sender].caPubkey = 0x19dec5DE28cD9433d73A5FEA9C9D99E137064B57;
+        certificates[msg.sender].caPubkey = 0xCcB8F0A7581075b74F74cfb1E4aB6fa822FACFac;
         certificates[msg.sender].userPubkey = msg.sender;
         certificates[msg.sender].certhash = certhash;
     }

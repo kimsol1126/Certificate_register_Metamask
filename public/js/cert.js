@@ -4,7 +4,7 @@ const selectedAddress = web3.eth.defaultAccount  //1~2 현재 엑티브되어있
 console.log("selectedAddress: " +selectedAddress); //연결된 계정 확인 로그
 
 $(document).ready(function() {
-    const productRegistryContractAddress = '0x073790EA609d770004Dca3d58aE410112C929C16'; //스마트컨트랙트 주소
+    const productRegistryContractAddress = '0xd37EBA24BBa140474e93d42DB0C147f819B6ce79'; //스마트컨트랙트 주소
     const productRegistryContractABI = //스마트컨트랙트 ABI 코드
     [
       {
@@ -187,7 +187,7 @@ $(document).ready(function() {
             "type": "bool"
           }
         ],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
       },
       {
@@ -298,26 +298,42 @@ $(document).ready(function() {
     });
 
 	async function showTable() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center-center',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }})
 
-		if (window.ethereum)
-			try {
-			//	await window.ethereum.enable();
-			const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      } catch (err) {
-                return showError("Access to your Ethereum account rejected.");
-			}
-		if (typeof web3 === 'undefined')
-                return showError("Please install MetaMask to access the Ethereum Web3 injected API from your Web browser.");
-		
+        if (window.ethereum)
+        try {
+          const accounts = await ethereum.request({ method: 'eth_requestAccounts' }); //메타마스크와 연결되어있는가
+        } catch (err) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Access to your Ethereum account rejected.'
+          });
+        }
+      if (typeof web3 === 'undefined'){
+        Toast.fire({
+          icon: 'error',
+          title: 'Please install MetaMask to access the Ethereum Web3 injected API from your Web browser.'
+      });
+      }
 		let contract = web3.eth.contract(productRegistryContractABI).at(productRegistryContractAddress);
-
-		//$('#myTable').append(  '<table border = "3", width = "100%">' );
-
 	
 
 		contract.getCertificate(function(err, result) {
-			if (err)
-				return showError("Smart contract call failed: " + err);
+			if (err){
+        Toast.fire({
+          icon: 'error',
+          title: 'Smart contract call failed :('
+      });
+      }
 
 			console.log("certificate: " + result);
 
@@ -328,11 +344,19 @@ $(document).ready(function() {
       let notAfter = new Date(strArray[4]*1000);
 			console.log("notAfter: " + notAfter);
       console.log("ID: " + strArray[5]);
-      $('#myTable').append('<table border = "1", width = "100%"><tr><th rowspan = "6">인증서</th><td>address</td><td>' + strArray[0] + "</td></tr><tr><td>이름</td><td>" + strArray[1] + "</td></tr><tr><td>생년월일</td><td>" + strArray[2] + "</td></tr><tr><td>유효기간(시작)</td><td>" + notBefore  + "</td></tr><tr><td>유효기간(끝)</td><td>" + notAfter + "</td></tr><tr><td>ID</td><td>" + strArray[5] + '</td></tr></table>' );
+      $("#myTable").empty();
+      if(strArray[1]==''){
+        Toast.fire({
+          icon: 'error',
+          title: 'Your certificate does not exist'
+      });
+      }
+      else{
+        $('#myTable').append('<table border = "1", width = "100%"><tr><th rowspan = "6">인증서</th><td>address</td><td>' + strArray[0] + "</td></tr><tr><td>이름</td><td>" + strArray[1] + "</td></tr><tr><td>생년월일</td><td>" + strArray[2] + "</td></tr><tr><td>유효기간(시작)</td><td>" + notBefore  + "</td></tr><tr><td>유효기간(끝)</td><td>" + notAfter + "</td></tr><tr><td>ID</td><td>" + strArray[5] + '</td></tr></table>' );
+      }
       
-		}); 
-
-    }
+		});  
+  }
     
     async function itemUploadButton() {
       const Toast = Swal.mixin({
@@ -373,20 +397,45 @@ $(document).ready(function() {
       
       let contract = web3.eth.contract(productRegistryContractABI).at(productRegistryContractAddress);
 
-      contract.issue(userName, birth, function(err, result) {
-        if (err){
+      contract.hasinfo(function(err,result){
+        console.log(result)
+        if (result == true){
           Toast.fire({
             icon: 'error',
-            title: 'Smart contract call failed :('
+            title: 'Your certificate already exists'
         });
         }
         else{
-          Toast.fire({
-            icon: 'success',
-            title: 'Document successfully added to the registry.'
-        });
-      }
-      }); 
+          contract.issue(userName, birth, function(err, result) {
+            if (err){
+              Toast.fire({
+                icon: 'error',
+                title: 'Smart contract call failed :('
+            });
+            }
+            else{
+              Toast.fire({
+                icon: 'success',
+                title: 'Document successfully added to the registry.'
+            });
+          }
+          }); 
+        }
+      })
+      // contract.issue(userName, birth, function(err, result) {
+      //   if (err){
+      //     Toast.fire({
+      //       icon: 'error',
+      //       title: 'Smart contract call failed :('
+      //   });
+      //   }
+      //   else{
+      //     Toast.fire({
+      //       icon: 'success',
+      //       title: 'Document successfully added to the registry.'
+      //   });
+      // }
+      // }); 
       
     }
 
