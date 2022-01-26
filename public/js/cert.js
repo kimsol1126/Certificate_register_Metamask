@@ -421,22 +421,7 @@ $(document).ready(function() {
           }
           }); 
         }
-      })
-      // contract.issue(userName, birth, function(err, result) {
-      //   if (err){
-      //     Toast.fire({
-      //       icon: 'error',
-      //       title: 'Smart contract call failed :('
-      //   });
-      //   }
-      //   else{
-      //     Toast.fire({
-      //       icon: 'success',
-      //       title: 'Document successfully added to the registry.'
-      //   });
-      // }
-      // }); 
-      
+      })    
     }
 
     async function deletecertButton(){
