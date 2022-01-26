@@ -3,7 +3,11 @@ var db_info = {
     host: 'localhost',
     port: '3306',
     user: 'root',
+<<<<<<< HEAD
     password: '1111',
+=======
+    password: '',
+>>>>>>> 8c0192a7569cbb159c22a6acae030b0a502615e8
     database: 'mydata'
 }
 
